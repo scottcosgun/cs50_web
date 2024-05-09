@@ -1,0 +1,61 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <h1>All Posts</h1>
+
+    {% if user.is_authenticated %}
+        <div class="new-post mx-4">
+            <h2>New Post</h2>
+            <form action="{% url 'new_post' %}" method="post">
+                {% csrf_token %}
+                <textarea name="text" row="4" cols="80"></textarea>
+                <br>
+                <input type="submit" value="Post" class="btn btn-primary">
+            </form>
+        </div>
+    {% endif %}
+
+    <div class="all-posts">
+        {% for post in page_obj %}
+            <div class="row post mx-4">
+                <h6 class="author"><a href="{% url 'profile' user_id=post.user.id %}">@{{ post.user }}</a></h6>
+                {% if user.is_authenticated and post.user.id == user.id %}
+                <div class="edit-container">
+                    <p class="text">{{ post.text }}</p>
+                    <button class="edit-btn btn btn-primary" data-post-id="{{ post.id }}">Edit</button>
+                </div>
+                {% else %}
+                    <p class="text">{{ post.text }}</p>
+                {% endif %}
+                <p class="date">{{ post.date }}</p>
+                {% if user.is_authenticated %}
+                    <div class="like">
+                        <span class="like-count" data-post-id="{{ post.id }}"></span>
+                        {% if post.id in user_liked_posts %}
+                            <button class="like-btn btn btn-primary" data-post-id="{{ post.id }}">Unlike</button>
+                        {% else %}
+                            <button class="like-btn btn btn-primary" data-post-id="{{ post.id }}">Like</button>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <nav aria-label="Page Navigation">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% load static %}
+    <script>
+        const csrftoken = '{{ csrf_token }}';
+    </script>
+    <script src="{% static 'network/likeCounts.js' %}"></script>
+    <script src="{% static 'network/edit.js' %}"></script>
+    <script src="{% static 'network/like.js' %}"></script>
+{% endblock %}

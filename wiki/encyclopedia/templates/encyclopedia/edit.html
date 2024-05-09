@@ -1,0 +1,24 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia
+{% endblock %}
+
+{% block body %}
+    <h1>Edit this page</h1>
+
+    <h4>{{ title }}</h4>
+    <form action="{% url 'save_edit' %}" method="post">
+        {% csrf_token %}
+        <label>Title:</label>
+        <input type="text" name="title" placeholder="{{ title }}" value="{{ title }}">
+        <br>
+        <label>Edit the markdown content of this entry:</label>
+        <textarea name="content">{{ content }}</textarea>
+        <br>
+        <input type="submit" value="Save edits" class="btn btn-primary">
+    </form>
+
+    <p>Click the "Submit" button to save your changes to this Wiki entry.</p>
+
+{% endblock %}

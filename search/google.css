@@ -1,0 +1,108 @@
+.google_input {
+    display: flex;
+    z-index: 3;
+    text-align: center;
+    height: 44px;
+    background: #fff;
+    border: 1px solid #5f6368;
+    box-shadow: none;
+    border-radius: 24px;
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 638px;
+    max-width: 1000px;
+    color: #202124;
+    font-size: large;
+}
+
+.submit_form {
+    text-align: center;
+    color: black;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 25px 0;
+    padding:10px 10px;
+    border-radius: 5px;
+    outline: none;
+}
+
+.btn_google {
+    background-color: #e8eaed;
+    border: 1px solid #303134;
+    border-radius: 4px;
+    color: #303134;
+    font-family: Roboto,arial,sans-serif;
+    font-size: 14px;
+    margin: 11px 4px;
+    padding: 0 16px;
+    line-height: 27px;
+    height: 36px;
+    min-width: 54px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.center_img {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    height: auto;
+    transform: scale(0.7, 0.7);
+}
+.navigation {
+    text-align: right;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.navitem {
+    padding: 10px;
+}
+
+.h1_advanced {
+    color: #d93025;
+    font-size: 20px;
+    margin: 25px 35px;
+}
+
+.find_pages {
+    height: 30px;
+    display: table-cell;
+    vertical-align: middle;
+    padding-bottom: 40px;
+}
+
+.div_advanced {
+    padding: 35px;
+}
+
+.row_input {
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+}
+
+.left {
+    width: 200px;
+    padding-right: 10px;
+}
+
+.advanced_input {
+    width: 600px;
+}
+
+.btn_div {
+    padding: 10px;
+    padding-top: 20px;
+}
+
+.btn_advanced {
+    box-shadow: none;
+    background-color: dodgerblue;
+    border: 1px solid #3079ed;
+    color: #fff;
+}
