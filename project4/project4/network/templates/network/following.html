@@ -1,0 +1,41 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <h2>Posts from people I'm following:</h2>
+
+    <div class="all-posts">
+        {% for post in page_obj %}
+            <div class="row post mx-4">
+                <h6 class="author"><a href="{% url 'profile' user_id=post.user.id %}">@{{ post.user }}</a></h6>
+                <h6 class="text">{{ post.text }}</h6>
+                <p class="date">{{ post.date }}</p>
+                {% if user.is_authenticated %}
+                    <div class="like">
+                        <span class="like-count" data-post-id="{{ post.id }}"></span>
+                        {% if post.id in user_liked_posts %}
+                            <button class="like-btn btn btn-primary" data-post-id="{{ post.id }}">Unlike</button>
+                        {% else %}
+                            <button class="like-btn btn btn-primary" data-post-id="{{ post.id }}">Like</button>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <nav aria-label="Page Navigation">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% load static %}
+    <script>
+        const csrftoken = '{{ csrf_token }}';
+    </script>
+    <script src="{% static 'network/likeCounts.js' %}"></script>
+    <script src="{% static 'network/like.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <h1>@{{ username }}</h1>
+    <div class="container">
+        <div class="row d-flex">
+            <h5 class="col-4">Followers: {{followers.count }}</h5>
+            <h5 class="col-4">Following: {{following.count }}</h5>
+            {% if user.is_authenticated %}
+                {% if user.id != current_user.id %}
+                    <form action="{% url 'follow_unfollow' user_id=user.id followed_id=current_user.id %}" method="post">
+                        {% csrf_token %}
+                        {% if is_following %}
+                            <input type="submit" class="btn btn-primary" value="Unfollow">
+                        {% else %}
+                            <input type="submit" class="btn btn-primary" value="Follow">
+                        {% endif %}
+                    </form>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="all-posts">
+        {% for post in page_obj %}
+            <div class="row post mx-4">
+                <h6 class="author">@{{ post.user }}</h6>
+                {% if user.is_authenticated and post.user.id == user.id %}
+                <div class="edit-container">
+                    <p class="text">{{ post.text }}</p>
+                    <button class="edit-btn btn btn-primary" data-post-id="{{ post.id }}">Edit</button>
+                </div>
+                {% else %}
+                    <p class="text">{{ post.text }}</p>
+                {% endif %}
+                <p class="date">{{ post.date }}</p>
+            </div>
+        {% endfor %}
+        <nav aria-label="Page Navigation">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% load static %}
+    <script>
+        const csrftoken = '{{ csrf_token }}';
+    </script>
+    <script src="{% static 'network/edit.js' %}"></script>
+{% endblock %}
